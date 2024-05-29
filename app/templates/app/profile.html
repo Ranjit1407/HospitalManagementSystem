@@ -1,0 +1,47 @@
+<!-- patient_profile.html -->
+{% extends 'app/base.html' %} {% block title %}Patient Profile{% endblock %}
+<br />
+{% block content %} {% if user.is_patient %}
+<h2>Patient Profile</h2>
+<div class="row">
+  <div class="col-md-6">
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>First Name:</strong> {{ user.patient.F_NAME }}</p>
+    <p><strong>Last Name:</strong> {{ user.patient.L_NAME }}</p>
+    <p><strong>Street:</strong> {{ user.patient.STREET }}</p>
+    <p><strong>City:</strong> {{ user.patient.CITY }}</p>
+    <p><strong>State:</strong> {{ user.patient.STATE }}</p>
+    <p><strong>Country:</strong> {{ user.patient.COUNTRY }}</p>
+    <p><strong>Date of Birth:</strong> {{ user.patient.dob }}</p>
+    <p><strong>Phone:</strong> {{ user.patient.PHONE }}</p>
+  </div>
+  <div class="col-md-6">
+    <img
+      src="{{ user.patient.image }}"
+      class="img-fluid rounded-circle"
+      alt="Profile Picture"
+    />
+  </div>
+</div>
+{% elif user.is_doctor %}
+<h2>Doctor Profile</h2>
+<div class="row">
+  <div class="col-md-6">
+    <p><strong>First Name:</strong> {{ user.doctor.F_NAME }}</p>
+    <p><strong>Last Name:</strong> {{ user.doctor.L_NAME }}</p>
+    <p><strong>STREET:</strong> {{ user.doctor.STREET }}</p>
+    <p><strong>City:</strong> {{ user.doctor.CITY }}</p>
+    <p><strong>State:</strong> {{ user.doctor.STATE }}</p>
+    <p><strong>COUNTRY:</strong> {{ user.doctor.COUNTRY }}</p>
+    <p><strong>Specialization:</strong> {{ user.doctor.SPECIALIZATION }}</p>
+    <p><strong>PHONE:</strong> {{ user.doctor.PHONE }}</p>
+  </div>
+  <div class="col-md-6">
+    <img
+      src="{{ user.doctor.image}}"
+      class="img-fluid rounded-circle"
+      alt="Profile Picture"
+    />
+  </div>
+</div>
+{% endif %} {% endblock %}

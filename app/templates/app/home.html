@@ -1,0 +1,62 @@
+<!-- appointments.html -->
+{% extends 'app/base.html' %} {% block title %}Home{% endblock %}
+<br />
+{% block content %}
+<div class="container mt-4">
+  {% if user.is_superuser %}
+  <div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Add Appointment</h5>
+        <a href="{% url 'addappointment' %}" class="btn btn-primary">Add Appointment</a>
+    </div>
+</div>
+  </div>
+  {% endif %}
+  <h2>Upcoming Appointments</h2>
+  {% if upcoming_appointments %}
+  <div class="card">
+    <div class="card-body">
+      <ul class="list-group">
+        {% for appointment in upcoming_appointments %}
+        <li class="list-group-item">
+            {% if user.is_patient %} Doctor: {{ appointment.D_ID.F_NAME }}<br /> Date: {{ appointment.A_DATETIME }}<br />
+            {% elif user.is_doctor %}<a href="{% url 'create_treatment' appointment.pk %}">Patient: {{ appointment.P_ID.F_NAME }}<br />
+              Date: {{ appointment.A_DATETIME }}
+            </a> <br />
+            {% else %}<a href="{% url 'appointment_detail' appointment.pk %}">Doctor: {{ appointment.D_ID.F_NAME }}<br />
+            Patient: {{ appointment.P_ID.F_NAME }}<br /> Date: {{ appointment.A_DATETIME }}<br /></a>
+            {% endif %}
+          
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% else %}
+  <p>No upcoming appointments.</p>
+  {% endif %}
+
+  <h2 class="mt-4">Past Appointments</h2>
+  {% if past_appointments %}
+  <div class="card">
+    <div class="card-body">
+      <ul class="list-group">
+        {% for appointment in past_appointments %}
+        <li class="list-group-item">
+          <a href="{% url 'appointment_detail' appointment.pk %}">
+            {% if user.is_patient %} Doctor: {{
+            appointment.D_ID.F_NAME }}<br />
+            {% elif user.is_doctor %} 
+            Patient: {{ appointment.P_ID.F_NAME }}<br />
+            {% endif %} Date: {{ appointment.A_DATETIME }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% else %}
+  <p>No past appointments.</p>
+  {% endif %}
+</div>
+{% endblock %}

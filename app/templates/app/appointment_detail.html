@@ -1,0 +1,39 @@
+<!-- appointment_detail.html -->
+{% extends 'app/base.html' %} {% block title %}Appointment Detail{% endblock %}
+<br />
+{% block content %}
+<div class="container mt-4">
+  <h2>Appointment Detail</h2>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Date and Time: {{ object.A_DATETIME }}</h5>
+      <p class="card-text">Doctor: {{ object.D_ID }}</p>
+      <p class="card-text">Patient: {{ object.P_ID }}</p>
+      <p class="card-text">
+        Is Complete: {% if object.is_complete %}Yes{% else %}No{% endif %}
+      </p>
+    </div>
+  </div>
+
+  {% if object.treatment %}
+  <h2>Treatment Details</h2>
+  <div class="card">
+    <div class="card-body">
+      <p class="card-text">Description: {{ object.treatment.T_Desc }}</p>
+      <p class="card-text">Drugs:</p>
+      <ul>
+        {% for drug in object.treatment.Drug.all %}
+        <li>{{ drug }}</li>
+        {% endfor %}
+      </ul>
+      <p class="card-text">Lab Tests:</p>
+      <ul>
+        {% for labtest in object.treatment.LabTest.all %}
+        <li>{{ labtest }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

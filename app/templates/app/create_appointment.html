@@ -1,0 +1,27 @@
+# create_appointment.html
+<!DOCTYPE html>
+<html>
+  <body>
+    <form method="POST" action="{% url 'addappointment' %}">
+      {% csrf_token %}
+      <label for="doctor">Doctor:</label>
+      <select name="doctor" id="doctor">
+        {% for doctor in doctors %}
+        <option value="{{ doctor.F_NAME }}">{{ doctor.user.username }}</option>
+        {% endfor %}
+      </select>
+      <br />
+      <label for="patient">Patient:</label>
+      <select name="patient" id="patient">
+        {% for patient in patients %}
+        <option value="{{ patient.F_NAME }}">{{ patient.F_NAME }}</option>
+        {% endfor %}
+      </select>
+      <br />
+      <label for="date_time">Date and Time:</label>
+      <input type="datetime-local" name="date_time" id="date_time" required />
+      <br />
+      <input type="submit" />
+    </form>
+  </body>
+</html>
